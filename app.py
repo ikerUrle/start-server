@@ -19,13 +19,16 @@ except:
     print("Env variables missing")
     exit()
 
-def call_api(endpoint):
+def call_api(endpoint,method = 'GET'):
     base_url = f'https://{SERVER}/api2/json'
     url = base_url + endpoint
     headers = {
         'Authorization' : AUTH
     }
-    r = requests.get(url,headers=headers)
+    if (method == 'POST'):
+        r = requests.post(url,headers=headers)
+    else:
+        r = requests.get(url,headers=headers)
     if (r.status_code != 200) :
         response = {
             "status": "error",
@@ -46,7 +49,7 @@ def index():
 
 @app.route('/start', methods=['GET'])
 def start_vm():
-    return call_api(f"/nodes/{NODE}/qemu/104/status/start")
+    return call_api(f"/nodes/{NODE}/qemu/104/status/start","POST")
 
 @app.route('/status', methods=['GET'])
 def status_vm():
