@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Urle | Server manager</title>
+  </head>
+  <body>
+    <h1>Server manager</h1>
+    <button id="start-server" >START</button>
+  </body>
+
+  <style>
+    button {
+      padding: 4rem;
+    }
+  </style>
+
+  <script>
+    document.querySelector("#start-server").addEventListener("click", () => {
+      fetch("/start");
+    });
+  </script>
+</html>

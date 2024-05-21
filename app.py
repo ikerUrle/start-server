@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 from waitress import serve
 import logging
 import requests
@@ -15,8 +15,8 @@ NODE = 'y'
 try:
     AUTH = os.environ['PVE_TOKEN']
     SERVER = os.environ['PVE_SERVER']
-
 except:
+    print("Env variables missing")
     exit()
 
 def call_api(endpoint):
@@ -39,6 +39,10 @@ def call_api(endpoint):
         }
         logger.info(f"Command executed successfully: {r.json()}")
     return jsonify(response)
+
+@app.route('/')
+def index():
+    return render_template('index.html')
 
 @app.route('/start', methods=['GET'])
 def start_vm():
